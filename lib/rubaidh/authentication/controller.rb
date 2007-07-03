@@ -22,10 +22,18 @@ module Rubaidh
 
       module ClassMethods
         def login_not_required_for(*actions)
-          if actions.length == 1 && actions[0].to_sym == :all
+          if actions.length == 1 && actions[0].to_sym == :any_action
             skip_before_filter :authenticate
           else
             skip_before_filter :authenticate, :only => actions
+          end
+        end
+        
+        def login_required_for(*actions)
+          if actions.length == 1 && actions[0].to_sym == :every_action
+            before_filter :authenticate
+          else
+            before_filter :authenticate, :only => actions
           end
         end
       end
