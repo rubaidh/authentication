@@ -50,7 +50,7 @@ module Rubaidh
 
               # State Machine information
               acts_as_state_machine :initial => :unconfirmed
-              state :unconfirmed
+              state :unconfirmed, :enter => :mail_activation_code
               state :confirmed, :enter => :clear_activation_code
 
               event :confirm_email_address do
@@ -115,6 +115,10 @@ module Rubaidh
 
           def set_activation_code
             self.activation_code = self.class.generate_hash
+          end
+          
+          def mail_activation_code
+            Notifications.deliver_activation(self)
           end
         end
       end
