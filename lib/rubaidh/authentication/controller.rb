@@ -80,9 +80,21 @@ module Rubaidh
             end
           else
             if !session_authenticated?
+              remember_requested_location
               redirect_to(new_session_path) and return false
             end
           end
+        end
+
+        def remember_requested_location(location = request.request_uri)
+          session[:requested_location] = location
+        end
+
+        def redirect_to_requested_location_or_default(default = root_path)
+          location = session[:requested_location]
+          session[:requested_location] = nil
+          
+          redirect_to(location ? location : default)
         end
       end
     end
