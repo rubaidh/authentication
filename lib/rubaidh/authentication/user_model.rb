@@ -1,9 +1,5 @@
-require 'md5'
-require 'bcrypt'
-
 module Rubaidh
   module Authentication
-
     module UserModel
       module ActMethods
         def rubaidh_authentication(options = {})
@@ -56,6 +52,10 @@ module Rubaidh
               event :confirm_email_address do
                 transitions :from => :unconfirmed, :to => :confirmed
               end
+            end
+            
+            if options[:roles]
+              has_and_belongs_to_many :roles, :extend => Rubaidh::Authentication::RoleAssocExtension
             end
           end
         end

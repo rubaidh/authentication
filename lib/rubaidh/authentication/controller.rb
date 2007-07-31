@@ -12,6 +12,31 @@ module Rubaidh
           unless included_modules.include?(InstanceMethods)
             include InstanceMethods
             extend ClassMethods
+            
+            class << self
+              Rubaidh::Authentication.roles.each do |role|
+                class_eval <<-CODE
+                  def #{role}_role_required_for(*actions)
+                    if actions.length == 1 && actions[0].to_sym == :every_action
+                      before_filter :authorise_current_user_as_#{role}
+                    else
+                      before_filter :authorise_current_user_as_#{role}, :only => actions
+                    end
+                  end
+                CODE
+              end
+            end
+            Rubaidh::Authentication.roles.each do |role|
+              class_eval <<-CODE
+                def authorise_current_user_as_#{role}
+                  unless session_authenticated? && current_user.roles.#{role}?
+                    flash[:error] = "Request operation requires #{role.to_s.humanize} role."
+                    redirect_to(new_session_path) and return false
+                  end
+                end
+              CODE
+            end
+            
             ApplicationHelper.send(:include, InstanceMethods)
 
             before_filter :authenticate_with_cookie
