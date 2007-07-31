@@ -9,14 +9,9 @@ module Rubaidh
           class_inheritable_accessor :rubaidh_authentication_role_options
           self.rubaidh_authentication_role_options = options
 
-          class << self
-            Rubaidh::Authentication.roles.each do |role|
-              class_eval <<-CODE
-                def #{role}
-                  @@#{role} ||= find_or_create_by_name("#{role}")
-                end
-              CODE
-            end
+          Rubaidh::Authentication.roles.each do |role|
+            cattr_accessor role
+            class_variable_set("@@#{role}", find_or_create_by_name(role.to_s))
           end
 
           has_and_belongs_to_many rubaidh_authentication_role_options[:user_model], :uniq => true
