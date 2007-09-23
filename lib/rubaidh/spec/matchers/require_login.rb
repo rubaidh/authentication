@@ -8,6 +8,10 @@ module Rubaidh
           @request = request
         end
 
+        def matches?(response)
+          response.response_code == 401 || super
+        end
+
         def failure_message
           if @redirected
             return %Q{expected redirect to login page, got redirect to #{@actual.inspect}}
