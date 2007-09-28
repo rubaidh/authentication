@@ -5,6 +5,7 @@ module Rubaidh
         def rubaidh_authentication(options = {})
           options[:login_field] ||= :login
           options[:login_field] = options[:login_field].to_sym
+          options[:openid] ||= false
 
           class_inheritable_accessor :acts_as_login_options
           self.acts_as_login_options = options
@@ -22,21 +23,21 @@ module Rubaidh
             # work for login
             attr_reader :remember_me
 
-            validates_presence_of     acts_as_login_options[:login_field]
-            validates_uniqueness_of   acts_as_login_options[:login_field], :case_sensitive => false
-            validates_length_of       acts_as_login_options[:login_field], :within => 3..100
+            validates_presence_of     acts_as_login_options[:login_field],                           :unless => :using_openid?
+            validates_uniqueness_of   acts_as_login_options[:login_field], :case_sensitive => false, :unless => :using_openid?, :allow_nil => acts_as_login_options[:openid]
+            validates_length_of       acts_as_login_options[:login_field], :within => 3..100,        :unless => :using_openid?
 
             class_eval <<-RUBY
-              def self.find_by_#{acts_as_login_options[:login_field]}_and_password(login, password)
+              def self.authenticate(login, password)
                 u = find_by_#{acts_as_login_options[:login_field]}(login)
                 u && u.authenticated?(password) ? u : nil
               end
             RUBY
 
-            validates_presence_of     :password, :if => :password_required?
-            validates_presence_of     :password_confirmation, :if => :password_required?
-            validates_length_of       :password, :within => 4..40, :if => :password_required?
-            validates_confirmation_of :password, :if => :password_required?
+            validates_presence_of     :password,                    :if => :password_required?
+            validates_presence_of     :password_confirmation,       :if => :password_required?
+            validates_length_of       :password, :within => 4..40,  :if => :password_required?
+            validates_confirmation_of :password,                    :if => :password_required?
 
             before_validation :encrypt_virtual_password_unless_blank
             
@@ -98,11 +99,15 @@ module Rubaidh
 
         protected
         def password_required?
-          crypted_password.blank? || !password.blank?
+          !using_openid? && (crypted_password.blank? || !password.blank?)
         end
 
         def encrypt_virtual_password_unless_blank
           write_attribute('crypted_password', BCrypt::Password.create(self.password)) unless self.password.blank?
+        end
+        
+        def using_openid?
+          acts_as_login_options[:openid] && !identity_url.blank?
         end
       end
       
