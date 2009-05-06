@@ -32,3 +32,5 @@ Spec::Runner.configure do |config|
   config.use_instantiated_fixtures  = false
   config.fixture_path = RAILS_ROOT + '/spec/fixtures/'
 end
+
+ActiveRecord::Migrator.migrate(File.join(File.dirname(__FILE__), "..", "db", "migrate"))
