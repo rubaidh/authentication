@@ -1,1 +1,4 @@
 .DS_Store
+
+# Log files
+/log/*.log
