@@ -10,4 +10,5 @@ Rails::Initializer.run do |config|
   config.time_zone = 'UTC'
   config.action_controller.session = { :key => "_authentication_session", :secret => "OhRu4ooheingai3yau1zahM7Doo6ah" }
   config.gem 'state_machine'
+  config.gem 'object_daddy'
 end
