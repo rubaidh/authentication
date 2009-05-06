@@ -1,0 +1,22 @@
+<div class="block">
+  <div class="content">
+    <h2 class="title">Editing Password</h2>
+    <div class="inner">
+      <% form_tag password_path, :method => :put do %>
+        <%= error_messages_for :user %>
+
+        <p>
+          <%= label_tag :password %><br />
+          <%= password_field_tag :password %>
+        </p>
+        <p>
+          <%= label_tag :password_confirmation %><br />
+          <%= password_field_tag :password_confirmation %>
+        </p>
+        <p>
+          <%= submit_tag "Update", :id => 'update_button' %>
+        </p>
+      <% end %>
+    </div>
+  </div>
+</div>

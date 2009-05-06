@@ -1,0 +1,30 @@
+<div class="block">
+  <div class="content">
+    <h2 class="title"><%=h @user.login.username %></h2>
+    <div class="inner">
+      <p>
+        First name: <%=h @user.first_name %>
+        <br />
+        Last name: <%=h @user.last_name %>
+        <br />
+        Email: <%=h @user.email %>
+      </p>
+
+    </div>
+  </div>
+</div>
+
+<% content_for :sidebar do %>
+  <div class="block notice">
+    <h4>Tasks</h4>
+    <ul>
+      <li><%= link_to('Activate User', [:activate, :admin, @user], :method => :put)%></li>
+      <li><%= link_to('Suspend User', [:suspend, :admin, @user], :method => :put)%></li>
+      <li><%= link_to('Edit User', [:edit, :admin, @user]) %></li>
+      <li><%= link_to('Reset Password', [:reset_password, :admin, @user], :method => :put)%></li>
+      <li><%= link_to('Delete User', [:admin, @user], :confirm => 'Are you sure?', :method => :delete)%></li>
+      <br />
+      <%= link_to('Return to Listing Users', admin_users_path) %>
+    </ul>
+  </div>
+<% end %>

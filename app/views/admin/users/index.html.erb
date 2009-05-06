@@ -1,0 +1,40 @@
+<div class="block">
+  <div class="content">
+    <h2 class="title">Listing Active Users</h2>
+    <div class="inner">
+      <br />
+      <% if @users.present? %>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Login username</th>
+            </tr>
+          </thead>
+          <tbody>
+          <% @users.each do |user| %>
+            <tr>
+              <td><%=h user.first_name %></td>
+              <td><%=h user.last_name %></td>
+              <td><%=h user.login.username %></td>
+              <td><%= link_to 'Show', [:admin, user], :id => h(user.login.username) %></td>
+            </tr>
+          <% end %>
+          </tbody>
+        </table>
+      <% else %>
+        <p>No Users.</p>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<% content_for :sidebar do %>
+  <div class="block notice">
+    <ul>
+      <li><%= link_to 'Active Users', admin_users_path %></li>
+      <li><%= link_to 'Inactive Users', inactive_admin_users_path %></li>
+    </ul>
+  </div>
+<% end %>

@@ -1,0 +1,17 @@
+<div class="block">
+  <div class="content">
+    <h2 class="title">Editing User</h2>
+    <div class="inner">
+      <%= render :partial => 'admin/users/form', :locals => { :user => @user } %>
+    </div>
+  </div>
+</div>
+<% content_for :sidebar do %>
+  <div class="block notice">
+    <h4>Tasks</h4>
+    <ul>
+      <li><%= link_to('Return to User Page', admin_user_path(@user)) %></li>
+      <li><%= link_to('Return to Listing Users', admin_users_path) %></li>
+    </ul>
+  </div>
+<% end %>
