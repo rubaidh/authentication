@@ -13,7 +13,7 @@ Feature: Adminstrate users
     Given that I am an authenticated admin user with username "admin" and password "pass"
     When I go to the admin users page
     And I follow "admin"
-    Then I should see "<h2 class=\"title\">admin</h2>"
+    Then I should see "admin"
     And  I should see "Edit User"
 
   Scenario: Editing a user
@@ -31,7 +31,7 @@ Feature: Adminstrate users
     When I go to the admin users page
     And I follow "admin"
     And I follow "Delete User"
-    Then I should see "<h2 class=\"title\">admin</h2>"
+    Then I should see "admin"
     And I should see "You cannot delete yourself."
 
   Scenario: Deleting a user that isn't yourself
@@ -50,7 +50,7 @@ Feature: Adminstrate users
     And I follow "peter"
     And I follow "Activate User"
     Then I should see "User has been activated"
-    And I should see "<h2 class=\"title\">peter</h2>"
+    And I should see "peter"
 
   Scenario: Attempting to activate an active user
     Given that I am an authenticated admin user with username "admin" and password "pass"
@@ -59,7 +59,7 @@ Feature: Adminstrate users
     And I follow "megaman"
     And I follow "Activate User"
     Then I should see "User is already active"
-    And I should see "<h2 class=\"title\">megaman</h2>"
+    And I should see "megaman"
 
    Scenario: Suspending a naughty user
      Given that I am an authenticated admin user with username "admin" and password "pass"
@@ -68,7 +68,7 @@ Feature: Adminstrate users
      And I follow "adam_west"
      And I follow "Suspend User"
      Then I should see "User has been suspended"
-     And I should see "<h2 class=\"title\">adam_west</h2>"
+     And I should see "adam_west"
 
    Scenario: Attempting to suspend a suspended user
      Given that I am an authenticated admin user with username "admin" and password "pass"
@@ -77,7 +77,7 @@ Feature: Adminstrate users
      And I follow "adam_west"
      And I follow "Suspend User"
      Then I should see "User is already suspended"
-     And I should see "<h2 class=\"title\">adam_west</h2>"
+     And I should see "adam_west"
 
   Scenario: Attempting to suspend myself because I'm a bit stupid like that
     Given that I am an authenticated admin user with username "admin" and password "pass"
@@ -85,7 +85,7 @@ Feature: Adminstrate users
     And I follow "admin"
     And I follow "Suspend User"
     Then I should see "You cannot suspend yourself"
-    And I should see "<h2 class=\"title\">admin</h2>"
+    And I should see "admin"
 
   Scenario: Resetting a users password
     Given that I am an authenticated admin user with username "admin" and password "pass"
@@ -94,4 +94,4 @@ Feature: Adminstrate users
     And I follow "michael"
     And I follow "Reset Password"
     Then I should see "Password reset sent"
-    And I should see "<h2 class=\"title\">michael</h2>"
+    And I should see "michael"

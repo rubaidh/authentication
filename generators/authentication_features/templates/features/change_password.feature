@@ -11,7 +11,7 @@ Scenario: I am not logged in and shouldn't be able to change a password in this 
   Scenario: I am a logged in user wanting to change my password
     Given that I am an authenticated user with the username "foobar" and password "password"
     When I go to the change password page
-    Then I should see "<h2 class=\"title\">Editing Password</h2>"
+    Then I should see "Editing Password"
 
   Scenario: Changing my password with a new valid password and confirmation
     Given that I am an authenticated user with the username "foobar" and password "password"
@@ -20,7 +20,7 @@ Scenario: I am not logged in and shouldn't be able to change a password in this 
     And I fill in "password_confirmation" with "omgwtfpwnt!"
     And I press "update_button"
     Then I should see "Password was successfully updated."
-    And I should see "<h2 class=\"title\">Log in</h2>"
+    And I should see "Log in"
 
   Scenario: Changing my password with invalid input
     Given that I am an authenticated user with the username "foobar" and password "password"
@@ -28,4 +28,4 @@ Scenario: I am not logged in and shouldn't be able to change a password in this 
     And I fill in "password" with "omgwtfpwnt!"
     And I fill in "password_confirmation" with "omgBBQFIREFIREFIRE"
     And I press "update_button"
-    Then I should see "<h2 class=\"title\">Editing Password</h2>"
+    Then I should see "Editing Password"
