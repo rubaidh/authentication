@@ -2,6 +2,7 @@ class AuthenticationFeaturesGenerator < Rails::Generator::Base
   def manifest
     record do |m|
       m.dependency 'cucumber', [], :collision => :skip
+      m.dependency 'rspec', [], :collision => :skip
 
       # generate the .feature files
       Dir.entries(File.join(File.dirname(__FILE__), 'templates', 'features')).each do |file_name|
@@ -18,6 +19,11 @@ class AuthenticationFeaturesGenerator < Rails::Generator::Base
       m.gsub_file File.join('features', 'support', 'paths.rb'), /case page_name/ do |match|
         "#{match}\n#{File.read(File.join(File.dirname(__FILE__), 'templates', 'features', 'support', 'authentication_paths.rb'))}"
       end
+
+      # we use object_daddy for both features and specs and it is probably a good idea to give the application a copy of them
+      m.directory(File.join('spec', 'exemplars'))
+      m.file(File.join('..', '..', '..', 'spec', 'exemplars', 'user_exemplar.rb'), File.join('spec', 'exemplars', 'user_exemplar.rb'))
+      m.file(File.join('..', '..', '..', 'spec', 'exemplars', 'login_exemplar.rb'), File.join('spec', 'exemplars', 'login_exemplar.rb'))
     end
   end
 end
