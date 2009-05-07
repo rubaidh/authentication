@@ -7,7 +7,7 @@ Feature: Adminstrate users
     Given that I am an authenticated admin user with username "admin" and password "pass"
     When I go to the admin users page
     Then I should see "Listing Active Users"
-    And I should see "<td>admin</td>"
+    And I should see "admin"
 
   Scenario: Click on a user in the list
     Given that I am an authenticated admin user with username "admin" and password "pass"
