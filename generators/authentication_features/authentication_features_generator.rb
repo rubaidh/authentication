@@ -13,11 +13,10 @@ class AuthenticationFeaturesGenerator < Rails::Generator::Base
         m.file(File.join('features', 'step_definitions', file_name), File.join('features', 'step_definitions', file_name)) if file_name.match(/\.rb$/)
       end
 
-      unless File.read(File.join(RAILS_ROOT, 'features','support', 'paths.rb')).match(/## START AUTHENTICATION STEPS/)
-        # generate authentication support/paths
-        m.gsub_file File.join('features', 'support', 'paths.rb'), /case page_name/ do |match|
-          "#{match}\n#{File.read(File.join(File.dirname(__FILE__), 'templates', 'features', 'support', 'authentication_paths.rb'))}"
-        end
+      # generate authentication support/paths
+      # FIXME: when the generator is run this should ideally not replicate itself
+      m.gsub_file File.join('features', 'support', 'paths.rb'), /case page_name/ do |match|
+        "#{match}\n#{File.read(File.join(File.dirname(__FILE__), 'templates', 'features', 'support', 'authentication_paths.rb'))}"
       end
     end
   end
