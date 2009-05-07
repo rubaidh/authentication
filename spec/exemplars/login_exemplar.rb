@@ -1,7 +1,7 @@
 # Login Exemplar
 #
 # Created on April 20, 2009 17:00 by Mark Connell as part
-# of the "Login app" project.
+# of the "authentication" project.
 #
 #--
 # Copyright (c) 2006-2009 Rubaidh Ltd.  All rights reserved.

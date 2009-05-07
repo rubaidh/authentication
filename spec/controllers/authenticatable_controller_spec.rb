@@ -1,7 +1,7 @@
 # Authenticatable Controller Spec
 #
 # Created on April 21, 2009 11:26 by Mark Connell as part
-# of the "Login app" project.
+# of the "authentication" project.
 #
 #--
 # Copyright (c) 2006-2009 Rubaidh Ltd.  All rights reserved.
