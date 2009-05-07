@@ -40,3 +40,7 @@ end
 Then /^I should push the "(.*)" button and be given a forbidden exception$/ do |button_name|
   lambda { click_button(button_name) }.should raise_error(ActionController::Forbidden)
 end
+
+Then /^I should be redirected to (.*)$/ do |text|
+  request.request_uri.should == (path_to(text))
+end
