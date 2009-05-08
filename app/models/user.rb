@@ -18,6 +18,11 @@ class User < ActiveRecord::Base
 
   validates_presence_of :first_name, :last_name
 
+  before_create :make_admin_if_no_other_users
+  def make_admin_if_no_other_users
+    self.administrator = true if User.count == 0
+  end
+
   # activation is delegated to the login object
   after_create :request_activation
   def request_activation
@@ -27,7 +32,6 @@ class User < ActiveRecord::Base
   def initialize(*params)
     super
     build_login if login.blank?
-    self.administrator = true if User.count == 0
   end
 
   def email
