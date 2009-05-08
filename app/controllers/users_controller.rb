@@ -9,32 +9,5 @@
 #++
 
 class UsersController < AuthenticatableController
-  skip_before_filter :login_required, :only => [:show, :new, :create]
-
-  def show
-    respond_to do |format|
-      format.html { redirect_to new_user_path }
-    end
-  end
-
-  def new
-    @user = User.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-    end
-  end
-
-  def create
-    @user = User.new(params[:user])
-
-    respond_to do |format|
-      if @user.save
-        format.html # create.html.erb
-      else
-        format.html { render :action => "new" }
-      end
-    end
-  end
-
+  include Rubaidh::Authentication::UsersControllerMixin
 end

@@ -9,23 +9,5 @@
 #++
 
 class ActivationsController < AuthenticatableController
-  login_not_required :for => [:new, :create]
-
-  def new
-    respond_to do |format|
-      format.html # new.html
-    end
-  end
-
-  def create
-    @login = Login.find_by_email(params[:email])
-    if @login.present? && @login.pending?
-      @login.resend_activation!
-      flash[:notice] = "Your activation email has been resent."
-      redirect_to login_url
-    else
-      flash[:error] = "The email address you specified does not have a pending account associated with it."
-      render :action => 'new'
-    end
-  end
+  include Rubaidh::Authentication::ActivationsControllerMixin
 end

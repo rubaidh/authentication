@@ -9,24 +9,5 @@
 #++
 
 class LoginsController < AuthenticatableController
-  login_not_required :for => [:activate]
-
-  def activate
-    @login = Login.find_by_activation_code(params[:activation_code])
-    respond_to do |format|
-      if @login.present? && @login.activate
-        self.current_login = @login
-        format.html do
-          flash[:notice] = "Login account successfully activated, thank you"
-          redirect_to(root_url)
-        end
-      else
-        format.html do
-          flash[:error] = "There was an error activating your account."
-          redirect_to(new_session_url)
-        end
-      end
-    end
-  end
-
+  include Rubaidh::Authentication::LoginsControllerMixin
 end
