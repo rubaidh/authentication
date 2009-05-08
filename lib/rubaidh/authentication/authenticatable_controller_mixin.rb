@@ -12,8 +12,9 @@ module Rubaidh
 
           helper_method :logged_in?
           helper_method :current_login
+          helper_method :current_user
 
-          hide_action :current_login, :logged_in?
+          hide_action :current_user, :current_login, :logged_in?
 
           # Specify that login is required in order to successfully access some or all
           # of the actions on this controller.  Options:
