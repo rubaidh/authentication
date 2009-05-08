@@ -25,3 +25,13 @@ config.action_mailer.delivery_method = :test
 config.action_mailer.default_url_options = {
   :host => 'test.host'
 }
+
+class ActionController::Routing::RouteSet
+  def load_routes_with_isolation!
+    isolated_routes = File.join(File.dirname(__FILE__), '..', 'isolation_testing_routes.rb')
+    add_configuration_file(isolated_routes) unless configuration_files.include? isolated_routes
+    load_routes_without_isolation!
+  end
+
+  alias_method_chain :load_routes!, :isolation
+end
