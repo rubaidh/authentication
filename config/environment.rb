@@ -13,5 +13,4 @@ Rails::Initializer.run do |config|
   config.gem 'object_daddy'
 end
 
-require File.join(File.dirname(__FILE__), '..', 'lib', 'extensions', 'errors.rb')
-require File.join(File.dirname(__FILE__), '..', 'lib', 'extensions', 'rescue.rb')
+require File.join(File.dirname(__FILE__), '..', 'init')
