@@ -72,6 +72,10 @@ module Rubaidh
           @current_login
         end
 
+        def current_user
+          current_login.user
+        end
+
         def access_denied
           store_redirected_from_location
           respond_to do |format|
