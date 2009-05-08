@@ -1,7 +1,7 @@
 # Admin::Users Controller
 #
 # Created on May 01, 2009 13:46 by Mark Connell as part
-# of the "Login app" project.
+# of the "authentication" project.
 #
 #--
 # Copyright (c) 2006-2009 Rubaidh Ltd.  All rights reserved.
