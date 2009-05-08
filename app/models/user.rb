@@ -42,4 +42,8 @@ class User < ActiveRecord::Base
     login.update_attribute(:email, email)
   end
 
+  def full_name
+    "#{first_name} #{last_name}"
+  end
+
 end
