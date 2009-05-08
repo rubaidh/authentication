@@ -19,6 +19,9 @@ Given /^that I am an authenticated admin user with username "(.*)" and password 
   Then "I should see \"Successfully logged in\""
 end
 
+Given /^there are no users in the database$/ do
+  User.delete_all
+end
 
 Given /^I have an email address "(.*)"$/ do |email|
   Login.generate!(:email => email)

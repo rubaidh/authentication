@@ -22,6 +22,7 @@ Feature: Logging into the application
 
     Scenario: Attempting to login into /admin/users as the first user
       Given that I am an anonymous user
+      And there are no users in the database
       And there is an active user with the username "chocolate" and password "chip"
       When I go to the admin users page
       When I fill in "username" with "chocolate"
