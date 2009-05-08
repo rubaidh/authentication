@@ -10,6 +10,7 @@
 require 'digest/sha1'
 
 class Login < ActiveRecord::Base
+  unloadable
   belongs_to :user
 
   ## Named scopes
