@@ -95,3 +95,29 @@ Feature: Adminstrate users
     And I follow "Reset Password"
     Then I should see "Password reset sent"
     And I should see "michael"
+
+  Scenario: Setting an active user as an administrator
+    Given that I am an authenticated admin user with username "admin" and password "pass"
+    And there is an active user with the username "Tony" and password "Montana"
+    When I go to the admin users page
+    And I follow "Tony"
+    And I follow "Make Administrator"
+    Then I should see "User administrator permissions updated"
+    And I should see "Tony"
+
+  Scenario: Removing administrator rights from a user
+    Given that I am an authenticated admin user with username "admin" and password "pass"
+    And there is an active administrator with the username "cookie" and password "monster"
+    When I go to the admin users page
+    And I follow "cookie"
+    And I follow "Revoke Administrator"
+    Then I should see "User administrator permissions updated"
+    And I should see "cookie"
+
+  Scenario: Attempting to remove administrator rights from myself
+    Given that I am an authenticated admin user with username "admin" and password "pass"
+    When I go to the admin users page
+    And I follow "admin"
+    And I follow "Revoke Administrator"
+    Then I should see "I'm sorry Dave, I can't let you do that!"
+    And I should see "admin"

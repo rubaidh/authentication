@@ -346,4 +346,37 @@ describe Admin::UsersController do
       do_put
     end
   end
+
+  describe "responding to PUT administrator" do
+    before(:each) do
+      login :administrator
+      User.stub!(:find).and_return(@user)
+      @user.stub!(:update_attribute).and_return(true)
+    end
+
+    def do_put
+      put :administrator, :id => '123'
+    end
+
+    it "should find a User object" do
+      User.should_receive(:find).with('123')
+      do_put
+    end
+
+    it "should redirect back to the user page" do
+      do_put
+      response.should redirect_to(admin_user_path(@user))
+    end
+
+    describe "when the user is self" do
+      before(:each) do
+        controller.stub!(:current_login).and_return(@user.login)
+      end
+
+      it "should not allow the administrator setting to be changed" do
+        do_put
+        flash[:error].should_not be_blank
+      end
+    end
+  end
 end

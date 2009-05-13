@@ -39,6 +39,10 @@ describe Admin::UsersController do
       route_for(:controller => "admin/users", :action => "reset_password", :id => "3").should == {:path => "admin/users/3/reset_password",
         :method => :put}
     end
+
+    it "should map #administrator" do
+      route_for(:controller => "admin/users", :action => "administrator", :id => "3").should == {:path => "admin/users/3/administrator", :method => :put}
+    end
   end
 
   describe "route recognition" do
@@ -73,6 +77,10 @@ describe Admin::UsersController do
     it "should generate params for #reset_password" do
       params_from(:put, "/admin/users/3/reset_password").should == {:controller => "admin/users", :action => "reset_password", :id => "3"}
     end
+
+    it "should generate params for #administrator" do
+      params_from(:put, "/admin/users/3/administrator").should == {:controller => "admin/users", :action => "administrator", :id => "3"}
+    end
   end
 
   describe "named routes" do
@@ -102,6 +110,10 @@ describe Admin::UsersController do
 
     it "should route reset_password_admin_user_path to /admin/users/:id/reset_password" do
       reset_password_admin_user_path(3).should == "/admin/users/3/reset_password"
+    end
+
+    it "should route administrator_admin_user_path to /admin/users/:id/administrator" do
+      administrator_admin_user_path(3).should == "/admin/users/3/administrator"
     end
   end
 end
