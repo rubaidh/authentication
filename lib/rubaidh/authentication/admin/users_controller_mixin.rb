@@ -112,6 +112,23 @@ module Rubaidh
               end
             end
           end
+
+          def administrator
+            @user = User.find(params[:id])
+            unless i_am? @user
+              if @user.update_attribute(:administrator, (@user.administrator.present? ? false : true))
+                flash[:notice] = "User administrator permissions updated"
+              else
+                flash[:error] = "Something went wrong and permissions were not changed"
+              end
+            else
+              flash[:error] = "I'm sorry Dave, I can't let you do that!"
+            end
+            respond_to do |format|
+              format.html { redirect_to(admin_user_path(@user)) }
+            end
+          end
+
         end
       end
     end
