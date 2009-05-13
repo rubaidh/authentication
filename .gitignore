@@ -2,3 +2,7 @@
 
 # Log files
 /log/*.log
+
+# Generated reports
+/spec/reports
+/coverage
