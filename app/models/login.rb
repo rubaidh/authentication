@@ -64,7 +64,7 @@ class Login < ActiveRecord::Base
     end
 
     event :activate do
-      transition [:pending, :suspended, :deleted] => :active
+      transition [:new, :pending, :suspended, :deleted] => :active
     end
 
     event :suspend do

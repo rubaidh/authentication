@@ -301,9 +301,9 @@ describe Login do
         login.state.should == "new"
       end
 
-      it "should have three state events available to access" do
+      it "should have four state events available to access" do
         login = Login.generate
-        login.state_events.size.should == 3
+        login.state_events.size.should == 4
       end
 
       it "should have request_activation,suspend and mark_deleted available to access" do
