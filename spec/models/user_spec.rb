@@ -37,21 +37,4 @@ describe User do
     end
   end
 
-  describe "class methods" do
-    describe "email" do
-      it "should fetch the email address from the login model" do
-        @user = generate_user
-        @user.login.should_receive(:email)
-        @user.email
-      end
-
-      it "should allow the email to be set via the user model" do
-        @user = generate_user
-        old_email = @user.email
-        @user.update_attribute(:email, 'something.new@email.com')
-        old_email.should_not == @user.email
-      end
-    end
-  end
-
 end
