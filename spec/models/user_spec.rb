@@ -272,17 +272,17 @@ describe User do
   describe "state machine transitions" do
     describe "when object has 'new' state" do
       it "should have a 'new' state" do
-        user = User.generate
+        user = User.spawn
         user.state.should == "new"
       end
 
       it "should have four state events available to access" do
-        user = User.generate
+        user = User.spawn
         user.state_events.size.should == 4
       end
 
       it "should have request_activation,suspend and mark_deleted available to access" do
-        user = User.generate
+        user = User.spawn
         user.can_request_activation?.should == true
         user.can_suspend?.should == true
         user.can_mark_deleted?.should == true
@@ -290,20 +290,19 @@ describe User do
 
       describe "transition to pending" do
         it "should transition to pending on 'request_activation'" do
-          user = User.generate
-          user.request_activation.should == true
+          user = User.spawn
+          user.state.should == "new"
+          user.save
           user.state.should == "pending"
         end
 
         it "should make sure activated at in the user object is blank" do
           user = User.generate
-          user.request_activation
           user.activated_at.should be_blank
         end
 
         it "should generate an activation code" do
           user = User.generate
-          user.request_activation
           user.activation_code.should_not be_blank
           user.activation_code.size.should == 40
         end

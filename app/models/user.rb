@@ -21,10 +21,9 @@ class User < ActiveRecord::Base
   before_validation :encrypt_plaintext_password_if_supplied
 
   validates_presence_of     :first_name, :last_name, :email
-  validates_uniqueness_of   :username, :email
+  validates_uniqueness_of   :email
   validates_length_of       :email, :within => 6..100
 
-  validates_length_of       :username, :within => 3..40       , :if => :plaintext_password_required?
   validates_presence_of     :password, :password_confirmation , :if => :plaintext_password_required?
   validates_confirmation_of :password                         , :if => :plaintext_password_required?
   validates_presence_of :crypted_password
@@ -39,9 +38,6 @@ class User < ActiveRecord::Base
 
   # activation is delegated to the login object
   after_create :request_activation
-  def request_activation
-    login.request_activation
-  end
 
   ## State Machine
 
