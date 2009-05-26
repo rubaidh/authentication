@@ -70,13 +70,13 @@ describe User do
       end
 
       it "should be unique" do
-        user_one = User.generate(:username => "foo", :email => 'mark@rubaidh.com')
+        user_one = User.generate(:email => 'mark@rubaidh.com')
         user_one.should be_valid
 
-        user_two = User.generate(:username => "bar", :email => 'mark@rubaidh.com')
+        user_two = User.generate(:email => 'mark@rubaidh.com')
         user_two.should_not be_valid
 
-        user_three = User.generate(:username => 'baz', :email => 'support@rubaidh.com')
+        user_three = User.generate(:email => 'support@rubaidh.com')
         user_three.should be_valid
       end
     end
