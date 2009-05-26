@@ -17,7 +17,6 @@ class CreateUsers < ActiveRecord::Migration
       t.string    :email
 
       # authentication details
-      t.string    :username,                     :limit => 255
       t.string    :crypted_password,             :limit => 40
       t.string    :salt,                         :limit => 40
       t.string    :remember_token,               :limit => 40
