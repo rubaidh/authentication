@@ -9,8 +9,8 @@ describe UserMailer do
 
   describe "sending an activation request" do
     before(:each) do
-      @login = Login.generate
-      @email = LoginMailer.deliver_activation_request(@login)
+      @user = User.generate
+      @email = UserMailer.deliver_activation_request(@user)
     end
 
     it "should deliver an email" do
@@ -18,7 +18,7 @@ describe UserMailer do
     end
 
     it "should have been delivered to the correct user" do
-      @email.to.should == [@login.email]
+      @email.to.should == [@user.email]
     end
 
     it "should have a subject including 'Account activation request'" do
@@ -26,14 +26,14 @@ describe UserMailer do
     end
 
     it "should include an activation link" do
-      @email.body.should be_include("http://test.host/login/activate/#{@login.activation_code}")
+      @email.body.should be_include("http://test.host/user/activate/#{@user.activation_code}")
     end
   end
 
   describe "sending an activation confirmation" do
     before(:each) do
-      @login = Login.generate
-      @email = LoginMailer.deliver_activation_confirmation(@login)
+      @user = User.generate
+      @email = UserMailer.deliver_activation_confirmation(@user)
     end
 
     it "should deliver an email" do
@@ -41,7 +41,7 @@ describe UserMailer do
     end
 
     it "should have been delivered to the correct user" do
-      @email.to.should == [@login.email]
+      @email.to.should == [@user.email]
     end
 
     it "should have a subject including 'Account activation confirmed'" do
@@ -56,31 +56,8 @@ describe UserMailer do
 
   describe "sending a password reset" do
     before(:each) do
-      @login = Login.generate
-      @email = LoginMailer.deliver_password_reset(@login)
-    end
-
-    it "should deliver an email" do
-      ActionMailer::Base.deliveries.size.should == 1
-    end
-
-    it "should have been delivered to the correct login" do
-      @email.to.should == [@login.email]
-    end
-
-    it "should have a subject including password reset" do
-      @email.subject.should be_include('Password Reset')
-    end
-
-    it "should have include a new password for the login" do
-      @email.body.should be_include(@login.password)
-    end
-  end
-
-  describe "sending a suspension notice" do
-    before(:each) do
-      @login = Login.generate
-      @email = LoginMailer.deliver_suspension_notice(@login)
+      @user = User.generate
+      @email = UserMailer.deliver_password_reset(@user)
     end
 
     it "should deliver an email" do
@@ -88,7 +65,30 @@ describe UserMailer do
     end
 
     it "should have been delivered to the correct user" do
-      @email.to.should == [@login.email]
+      @email.to.should == [@user.email]
+    end
+
+    it "should have a subject including password reset" do
+      @email.subject.should be_include('Password Reset')
+    end
+
+    it "should have include a new password for the user" do
+      @email.body.should be_include(@user.password)
+    end
+  end
+
+  describe "sending a suspension notice" do
+    before(:each) do
+      @login = User.generate
+      @email = UserMailer.deliver_suspension_notice(@user)
+    end
+
+    it "should deliver an email" do
+      ActionMailer::Base.deliveries.size.should == 1
+    end
+
+    it "should have been delivered to the correct user" do
+      @email.to.should == [@user.email]
     end
 
     it "should have a subject including 'Account activation confirmed'" do
@@ -98,8 +98,8 @@ describe UserMailer do
 
   describe "sending a deletion notice" do
     before(:each) do
-      @login = Login.generate
-      @email = LoginMailer.deliver_deletion_notice(@login)
+      @user = User.generate
+      @email = UserMailer.deliver_deletion_notice(@user)
     end
 
     it "should deliver an email" do
@@ -107,7 +107,7 @@ describe UserMailer do
     end
 
     it "should have been delivered to the correct user" do
-      @email.to.should == [@login.email]
+      @email.to.should == [@user.email]
     end
 
     it "should have a subject including 'Account activation confirmed'" do
