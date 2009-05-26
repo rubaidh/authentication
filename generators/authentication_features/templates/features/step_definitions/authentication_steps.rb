@@ -24,7 +24,7 @@ Given /^there are no users in the database$/ do
 end
 
 Given /^I have an email address "(.*)"$/ do |email|
-  Login.generate!(:email => email)
+  User.generate!(:email => email)
 end
 
 When /^I fill in the signup form with "(.*)", "(.*)", "(.*)", "(.*)", "(.*)", "(.*)"$/ do |first_name, last_name, username, email, password, password_confirmation|
