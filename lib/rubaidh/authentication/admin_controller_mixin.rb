@@ -39,7 +39,7 @@ module Rubaidh
         protected
 
         def administrator_login_required
-          (logged_in? && current_login.user.administrator?) || admin_access_denied
+          (logged_in? && current_user.administrator?) || admin_access_denied
         end
 
         def admin_access_denied

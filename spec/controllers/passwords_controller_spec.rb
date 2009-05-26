@@ -12,7 +12,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe PasswordsController do
   before(:each) do
-    @login = Login.generate
+    @user = User.generate
   end
 
   describe "responding to GET 'new'" do
@@ -45,7 +45,7 @@ describe PasswordsController do
 
     describe "while logged in" do
       before(:each) do
-        controller.stub!(:current_login).and_return(@login)
+        controller.stub!(:current_user).and_return(@user)
       end
 
       it "should be successful" do
@@ -58,34 +58,34 @@ describe PasswordsController do
         response.should render_template(:edit)
       end
 
-      it "should assign @login to the view" do
+      it "should assign @user to the view" do
         do_get
-        assigns(:login).should be_instance_of(Login)
+        assigns(:user).should be_instance_of(User)
       end
     end
   end
 
   describe "responding to POST 'create'" do
     before(:each) do
-      controller.stub!(:current_login).and_return(@login)
+      controller.stub!(:current_user).and_return(@user)
     end
 
     def do_post
-      post :create, :email => @login.email
+      post :create, :email => @user.email
     end
 
     it "should expect a find_by_email on the Login model" do
-      Login.should_receive(:find_by_email)
+      User.should_receive(:find_by_email)
       do_post
     end
 
     describe "with a valid email address" do
       before(:each) do
-        Login.stub!(:find_by_email).and_return(@login)
+        User.stub!(:find_by_email).and_return(@user)
       end
 
       it "should make a call to reset_password!" do
-        @login.should_receive(:reset_password!)
+        @user.should_receive(:reset_password!)
         do_post
       end
 
@@ -102,7 +102,7 @@ describe PasswordsController do
 
     describe "with an invalid email address" do
       before(:each) do
-        Login.stub!(:find_by_email).and_return(nil)
+        User.stub!(:find_by_email).and_return(nil)
       end
 
       it "should flash an error" do
@@ -136,7 +136,7 @@ describe PasswordsController do
 
     describe "while logged in" do
       before(:each) do
-        controller.stub!(:current_login).and_return(@login)
+        controller.stub!(:current_login).and_return(@user)
       end
 
       it "should be successful" do
@@ -146,7 +146,7 @@ describe PasswordsController do
 
       describe "when successfully updated" do
         before(:each) do
-          @login.stub!(:update_password).and_return(true)
+          @user.stub!(:update_password).and_return(true)
         end
 
         it "should flash a notice" do
@@ -162,7 +162,7 @@ describe PasswordsController do
 
       describe "when not updated" do
         before(:each) do
-          @login.stub!(:update_password).and_return(false)
+          @user.stub!(:update_password).and_return(false)
         end
         it "should render the 'edit' template" do
           do_put

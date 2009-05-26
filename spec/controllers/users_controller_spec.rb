@@ -139,7 +139,7 @@ describe UsersController do
 
       it "should set current_user to be the @user" do
         do_get
-        controller.send(:current_login).should == @user
+        controller.send(:current_user).should == @user
       end
     end
 

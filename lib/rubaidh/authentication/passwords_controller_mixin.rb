@@ -16,11 +16,11 @@ module Rubaidh
         end
 
         def edit
-          @login = current_login
+          @login = current_user
         end
 
         def create
-          @login = Login.find_by_email(params[:email])
+          @login = User.find_by_email(params[:email])
           if @login.present?
             @login.reset_password!
             flash[:notice] = "A new password has been emailed to you."
