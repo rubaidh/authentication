@@ -11,10 +11,9 @@ module Rubaidh
           before_filter :attempt_to_log_in
 
           helper_method :logged_in?
-          helper_method :current_login
           helper_method :current_user
 
-          hide_action :current_user, :current_login, :logged_in?
+          hide_action :current_user, :logged_in?
 
           # Specify that login is required in order to successfully access some or all
           # of the actions on this controller.  Options:
@@ -57,8 +56,9 @@ module Rubaidh
         end
 
         # method to check the the object belongs to me (user or login)
+        # DEPRECATED: use a comparison with current user
         def i_am?(object)
-          if (object.class == Login && current_login == object) || (object.class == User && current_login.user == object)
+          if current_user == object
             true
           else
             false
@@ -66,15 +66,11 @@ module Rubaidh
         end
 
         def logged_in?
-          current_login.present?
-        end
-
-        def current_login
-          @current_login
+          current_user.present?
         end
 
         def current_user
-          current_login.user
+          @current_user
         end
 
         def access_denied
@@ -90,21 +86,21 @@ module Rubaidh
           logged_in? || access_denied
         end
 
-        def current_login=(new_login)
-          session[:login_id] = new_login.present? ? new_login.id : nil
-          @current_login = new_login
+        def current_user=(new_user)
+          session[:user_id] = new_user.present? ? new_user.id : nil
+          @current_user = new_user
         end
 
         def attempt_to_log_in
-          self.current_login ||= login_from_session || login_from_cookie
+          self.current_user ||= login_from_session || login_from_cookie
         end
 
         def login_from_session
-         Login.find_by_id(session[:login_id]) if session[:login_id].present?
+         User.find_by_id(session[:user_id]) if session[:user_id].present?
         end
 
         def login_from_cookie
-          Login.find_by_remember_token(remember_cookie) if remember_cookie.present?
+          User.find_by_remember_token(remember_cookie) if remember_cookie.present?
         end
 
         def remember_cookie
