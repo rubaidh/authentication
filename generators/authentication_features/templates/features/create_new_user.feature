@@ -12,8 +12,8 @@ Feature: Creating a new user
 
   Scenario: attempting to create an account where the username already taken
     Given that I am an anonymous user
-    And there is an active user with the email "jbloggs@foo.bar" and password "foobar"
+    And there is an active user with the email "valid.email@rubaidh.com" and password "foobar"
     When I go to the signup page
-    And I fill in the signup form with "Joe", "Bloggs", "jbloggs", "valid.email@rubaidh.com", "foobar", "foobar"
+    And I fill in the signup form with "Joe", "Bloggs", "valid.email@rubaidh.com", "foobar", "foobar"
     And I press "user_submit"
     Then I should see "Login username has already been taken"

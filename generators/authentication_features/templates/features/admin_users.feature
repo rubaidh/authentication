@@ -7,19 +7,19 @@ Feature: Adminstrate users
     Given that I am an authenticated admin user with email "admin@email.com" and password "pass"
     When I go to the admin users page
     Then I should see "Listing Active Users"
-    And I should see "admin"
+    And I should see "admin@email.com"
 
   Scenario: Click on a user in the list
     Given that I am an authenticated admin user with email "admin@email.com" and password "pass"
     When I go to the admin users page
-    And I follow "admin"
-    Then I should see "admin"
+    And I follow "admin@email.com"
+    Then I should see "admin@email.com"
     And  I should see "Edit User"
 
   Scenario: Editing a user
     Given that I am an authenticated admin user with email "admin@email.com" and password "pass"
     When I go to the admin users page
-    And I follow "admin"
+    And I follow "admin@email.com"
     And I follow "Edit User"
     And I fill in "user_first_name" with "Pizzaface"
     And I press "user_submit"
@@ -29,9 +29,9 @@ Feature: Adminstrate users
   Scenario: Trying to delete yourself and failing
     Given that I am an authenticated admin user with email "admin@email.com" and password "pass"
     When I go to the admin users page
-    And I follow "admin"
+    And I follow "admin@email.com"
     And I follow "Delete User"
-    Then I should see "admin"
+    Then I should see "admin@email.com"
     And I should see "You cannot delete yourself."
 
   Scenario: Deleting a user that isn't yourself
@@ -82,7 +82,7 @@ Feature: Adminstrate users
   Scenario: Attempting to suspend myself because I'm a bit stupid like that
     Given that I am an authenticated admin user with email "admin@email.com" and password "pass"
     When I go to the admin users page
-    And I follow "admin"
+    And I follow "admin@email.com"
     And I follow "Suspend User"
     Then I should see "You cannot suspend yourself"
     And I should see "admin"
@@ -117,7 +117,7 @@ Feature: Adminstrate users
   Scenario: Attempting to remove administrator rights from myself
     Given that I am an authenticated admin user with email "admin@email.com" and password "pass"
     When I go to the admin users page
-    And I follow "admin"
+    And I follow "admin@email.com"
     And I follow "Revoke Administrator"
     Then I should see "I'm sorry Dave, I can't let you do that!"
     And I should see "admin"
