@@ -1,6 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
-describe LoginObserver do
+describe UserObserver do
   before(:each) do
     @login = Login.generate
     @transition = nil
