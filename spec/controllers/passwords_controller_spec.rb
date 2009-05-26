@@ -136,7 +136,7 @@ describe PasswordsController do
 
     describe "while logged in" do
       before(:each) do
-        controller.stub!(:current_login).and_return(@user)
+        controller.stub!(:current_user).and_return(@user)
       end
 
       it "should be successful" do

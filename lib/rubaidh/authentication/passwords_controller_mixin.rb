@@ -16,13 +16,13 @@ module Rubaidh
         end
 
         def edit
-          @login = current_user
+          @user = current_user
         end
 
         def create
-          @login = User.find_by_email(params[:email])
-          if @login.present?
-            @login.reset_password!
+          @user = User.find_by_email(params[:email])
+          if @user.present?
+            @user.reset_password!
             flash[:notice] = "A new password has been emailed to you."
             redirect_to login_url
           else
@@ -32,10 +32,10 @@ module Rubaidh
         end
 
         def update
-          @login = current_login
+          @user = current_user
 
           respond_to do |format|
-            if @login.update_password(params[:password], params[:password_confirmation])
+            if @user.update_password(params[:password], params[:password_confirmation])
               flash[:notice] = 'Password was successfully updated.'
               format.html { redirect_to root_url }
             else

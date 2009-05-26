@@ -78,7 +78,7 @@ describe SessionsController do
 
       it "should set the login id to be a session variable" do
         do_post_with_remember_me
-        session[:login_id].should == @login.id
+        session[:user_id].should == @user.id
       end
 
       it "should render a flash notice" do
@@ -88,8 +88,8 @@ describe SessionsController do
 
       it "should set the @login remember token" do
         do_post_with_remember_me
-        @login.remember_token.should_not be_blank
-        @login.remember_token_expires_at.should_not be_blank
+        @user.remember_token.should_not be_blank
+        @user.remember_token_expires_at.should_not be_blank
       end
     end
 
@@ -98,8 +98,8 @@ describe SessionsController do
         User.stub!(:authenticate).and_return(nil)
       end
 
-      it "should attempt to authenticate the login" do
-        User.should_receive(:authenticate).with('username', 'password')
+      it "should attempt to authenticate the user" do
+        User.should_receive(:authenticate).with('email', 'password')
         do_post
       end
 

@@ -79,7 +79,7 @@ describe UserMailer do
 
   describe "sending a suspension notice" do
     before(:each) do
-      @login = User.generate
+      @user = User.generate
       @email = UserMailer.deliver_suspension_notice(@user)
     end
 

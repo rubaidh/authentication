@@ -18,9 +18,9 @@ module Rubaidh
         end
 
         def create
-          @login = Login.find_by_email(params[:email])
-          if @login.present? && @login.pending?
-            @login.resend_activation!
+          @user = User.find_by_email(params[:email])
+          if @user.present? && @user.pending?
+            @user.resend_activation!
             flash[:notice] = "Your activation email has been resent."
             redirect_to login_url
           else

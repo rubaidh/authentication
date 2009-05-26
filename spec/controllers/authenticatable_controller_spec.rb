@@ -409,15 +409,11 @@ describe "Authentication" do
       describe "when the current_login is me" do
         before(:each) do
           @user = generate_user
-          controller.send(:current_login=, @user.login)
+          controller.send(:current_user=, @user)
         end
 
         it "should say @user is me" do
           controller.send(:i_am?, @user).should == true
-        end
-
-        it "should say @user.login is me" do
-          controller.send(:i_am?, @user.login).should == true
         end
       end
     end

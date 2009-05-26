@@ -50,7 +50,7 @@ module Rubaidh
           def destroy
             @user = User.find(params[:id])
             unless i_am? @user
-              @user.login.mark_deleted
+              @user.mark_deleted
               respond_to do |format|
                 format.html do
                   flash[:notice] = "User successfully deleted"
@@ -69,10 +69,10 @@ module Rubaidh
 
           def activate
             @user = User.find(params[:id])
-            if @user.login.active?
+            if @user.active?
               flash[:notice] = "User is already active"
             else
-              @user.login.activate
+              @user.activate
               flash[:notice] = "User has been activated"
             end
             respond_to do |format|
@@ -83,10 +83,10 @@ module Rubaidh
           def suspend
             @user = User.find(params[:id])
             unless i_am? @user
-              if @user.login.suspended?
+              if @user.suspended?
                 flash[:notice] = "User is already suspended"
               else
-                @user.login.suspend
+                @user.suspend
                 flash[:notice] = "User has been suspended"
               end
               respond_to do |format|
@@ -104,7 +104,7 @@ module Rubaidh
 
           def reset_password
             @user = User.find(params[:id])
-            @user.login.reset_password!
+            @user.reset_password!
             respond_to do |format|
               format.html do
                 flash[:notice] = "Password reset sent"
