@@ -13,15 +13,15 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 describe User do
   describe "generator" do
     it "should successfully create a new instance" do
-      lambda { User.generate! }.should raise_error
+      lambda { User.generate! }.should_not raise_error
     end
 
     it "should persist the new instance in the database" do
-      lambda { User.generate }.should_not change(User, :count).by(1)
+      lambda { User.generate }.should change(User, :count).by(1)
     end
 
     it "should be valid" do
-      User.generate.should_not be_valid
+      User.generate.should be_valid
     end
   end
 
@@ -162,54 +162,54 @@ describe User do
     describe "self.authenticate" do
       describe "for an active user" do
         before(:each) do
-          @user = User.generate(:username => 'Bob', :password => "foobar", :password_confirmation => "foobar", :state => 'active')
+          @user = User.generate(:email => 'bob@bob.com', :password => "foobar", :password_confirmation => "foobar", :state => 'active')
         end
 
         describe "with correct credentials" do
           it "should return the user object" do
-            User.authenticate('Bob', 'foobar').should == @user
+            User.authenticate('bob@bob.com', 'foobar').should == @user
           end
         end
 
         describe "with incorrect credentials" do
           it "should return nil" do
-            User.authenticate('Bob', 'wooozle').should == nil
+            User.authenticate('bob@bob.com', 'wooozle').should == nil
           end
         end
       end
 
       describe "for a pending user" do
         before(:each) do
-          @user = User.generate(:username => 'Test', :password => 'foobar', :password_confirmation => 'foobar', :state => 'pending')
+          @user = User.generate(:email => 'test@rubaidh.com', :password => 'foobar', :password_confirmation => 'foobar', :state => 'pending')
         end
 
         describe "with correct credentials" do
           it "should return nil (not authenticate)" do
-            User.authenticate('Test', 'foobar').should == nil
+            User.authenticate('test@rubaidh.com', 'foobar').should == nil
           end
         end
 
         describe "with incorrect credentials" do
           it "should return nil (not authenticate)" do
-            User.authenticate('Test', 'wooooozle').should == nil
+            User.authenticate('test@rubaidh.com', 'wooooozle').should == nil
           end
         end
       end
 
       describe "for a suspended user" do
         before(:each) do
-          @user = User.generate(:username => 'Test', :password => 'foobar', :password_confirmation => 'foobar', :state => 'suspended')
+          @user = User.generate(:email => 'test@rubaidh.com', :password => 'foobar', :password_confirmation => 'foobar', :state => 'suspended')
         end
 
         describe "with correct credentials" do
           it "should return nil (not authenticate)" do
-            User.authenticate('Test', 'foobar').should == nil
+            User.authenticate('test@rubaidh.com', 'foobar').should == nil
           end
         end
 
         describe "with incorrect credentials" do
           it "should return nil (not authenticate)" do
-            User.authenticate('Test', 'wooozledoozle').should == nil
+            User.authenticate('test@rubaidh.com', 'wooozledoozle').should == nil
           end
         end
       end
