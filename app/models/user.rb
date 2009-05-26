@@ -49,7 +49,7 @@ class User < ActiveRecord::Base
 
     before_transition :new => :pending do |object, transition|
       object.activated_at = nil
-      object.activation_code = object.class.generate_hash
+      object.activation_code = User.generate_hash
     end
 
     before_transition any => :active do |object, transition|
@@ -114,8 +114,8 @@ class User < ActiveRecord::Base
   # user instance.  If not, it returns +nil+.  It only checks active users (ie
   # those that have created an account and correctly verified their email
   # address).
-  def self.authenticate(username, password)
-    user = Login.active.find_by_username(username)
+  def self.authenticate(email, password)
+    user = User.active.find_by_email(email)
     user if user.present? && user.correct_password?(password)
   end
 
@@ -148,12 +148,12 @@ class User < ActiveRecord::Base
   end
 
   def resend_activation!
-    LoginMailer.deliver_activation_request(self)
+    UserMailer.deliver_activation_request(self)
   end
 
   def reset_password!
-    self.password = self.password_confirmation = Login.generate_random_password
-    LoginMailer.deliver_password_reset(self)
+    self.password = self.password_confirmation = User.generate_random_password
+    UserMailer.deliver_password_reset(self)
     save!
   end
 
