@@ -31,12 +31,12 @@ class CreateUsers < ActiveRecord::Migration
       # authority details
       t.boolean :administrator
 
-      # indexes
-      t.index :email
-
       # additionals
       t.timestamps
     end
+
+    # table is created so we can now create the index
+    add_index(:users, :email)
   end
 
   def self.down
