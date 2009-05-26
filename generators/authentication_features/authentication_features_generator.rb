@@ -23,7 +23,6 @@ class AuthenticationFeaturesGenerator < Rails::Generator::Base
       # we use object_daddy for both features and specs and it is probably a good idea to give the application a copy of them
       m.directory(File.join('spec', 'exemplars'))
       m.file(File.join('..', '..', '..', 'spec', 'exemplars', 'user_exemplar.rb'), File.join('spec', 'exemplars', 'user_exemplar.rb'))
-      m.file(File.join('..', '..', '..', 'spec', 'exemplars', 'login_exemplar.rb'), File.join('spec', 'exemplars', 'login_exemplar.rb'))
     end
   end
 end
