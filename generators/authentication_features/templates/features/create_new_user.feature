@@ -16,4 +16,4 @@ Feature: Creating a new user
     When I go to the signup page
     And I fill in the signup form with "Joe", "Bloggs", "valid.email@rubaidh.com", "foobar", "foobar"
     And I press "user_submit"
-    Then I should see "Login username has already been taken"
+    Then I should see "Email has already been taken"
