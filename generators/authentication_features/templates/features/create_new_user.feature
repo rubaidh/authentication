@@ -6,13 +6,13 @@ Feature: Creating a new user
   Scenario: Filling in the form with unique valid data
     Given that I am an anonymous user
     When I go to the signup page
-    And I fill in the signup form with "Joe", "Bloggs", "jbloggs", "valid.email@rubaidh.com", "foobar", "foobar"
+    And I fill in the signup form with "Joe", "Bloggs", "valid.email@rubaidh.com", "foobar", "foobar"
     And I press "user_submit"
     Then I should see "Your account has been created, an activation email will shortly be delivered to the email address you provided."
 
   Scenario: attempting to create an account where the username already taken
     Given that I am an anonymous user
-    And there is an active user with the username "jbloggs" and password "foobar"
+    And there is an active user with the email "jbloggs@foo.bar" and password "foobar"
     When I go to the signup page
     And I fill in the signup form with "Joe", "Bloggs", "jbloggs", "valid.email@rubaidh.com", "foobar", "foobar"
     And I press "user_submit"

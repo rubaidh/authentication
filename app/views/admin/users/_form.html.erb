@@ -10,16 +10,10 @@
     <%= user_form.text_field :last_name %>
   </p>
 
-  <% user_form.fields_for :login do |login_form| %>
   <p>
-    <%= login_form.label :username %><br />
-    <%= login_form.text_field :username %>
+    <%= user_form.label :email %><br />
+    <%= user_form.text_field :email %>
   </p>
-  <p>
-    <%= login_form.label :email %><br />
-    <%= login_form.text_field :email %>
-  </p>
-  <% end %>
 
   <p>
     <%= user_form.submit %>
