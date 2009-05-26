@@ -1,4 +1,5 @@
 class LoginObserver < ActiveRecord::Observer
+  unloadable
 
   # mail the user after signing up
   def after_request_activation(login, transition)
