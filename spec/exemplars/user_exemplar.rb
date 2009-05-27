@@ -12,4 +12,17 @@ User.class_eval do
   generator_for :first_name, 'John'
   generator_for :last_name, 'Doe'
   generator_for :administrator, false
+
+  # authentication related
+  generator_for :email, :start => "testuser@example.com" do |prev|
+    user, domain = prev.split('@')
+    "#{user.succ}@#{domain}"
+  end
+
+  generator_for :activation_code, :start => "kaGhou1Ohxai6Iepho8vaxee8eideez3ku3ozohy" do |prev|
+    prev.succ
+  end
+  generator_for :last_logged_in_at, (Time.now - 10.days)
+  generator_for :password, "foobar"
+  generator_for :password_confirmation, "foobar"
 end

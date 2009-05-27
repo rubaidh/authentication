@@ -1,47 +1,28 @@
 Given /^there is a pending login with the email address "(.*)"$/ do |email|
-  user = User.spawn do |user|
-    user.login = Login.spawn(:user => user, :email => email)
-  end
-  user.save!
+  user = User.generate(:email => email)
 end
 
-Given /^there is a suspended user with the username "(.*)" and password "(.*)"$/ do |username, password|
-  user = User.spawn do |user|
-    user.login = Login.spawn(:user => user, :username => username, :password => password, :password_confirmation => password)
-  end
-  user.save!
-  user.login.suspend
+Given /^there is a suspended user with the email "(.*)" and password "(.*)"$/ do |email, password|
+  user = User.generate(:email => email, :password => password, :password_confirmation => password)
+  user.suspend
 end
 
-Given /^there is a pending user with the username "(.*)" and password "(.*)"$/ do |username, password|
-  user = User.spawn do |user|
-    user.login = Login.spawn(:user => user, :username => username, :password => password, :password_confirmation => password)
-  end
-  user.save!
+Given /^there is a pending user with the email "(.*)" and password "(.*)"$/ do |email, password|
+  user = User.generate(:email => email, :password => password, :password_confirmation => password)
 end
 
-Given /^there is an active user with the username "(.*)" and password "(.*)"$/ do |username, password|
-  user = User.spawn do |user|
-    user.login = Login.spawn(:user => user, :username => username, :password => password, :password_confirmation => password)
-  end
-  user.save!
-  user.login.activate
+Given /^there is an active user with the email "(.*)" and password "(.*)"$/ do |email, password|
+  user = User.generate(:email => email, :password => password, :password_confirmation => password)
+  user.activate
 end
 
-Given /^there is an active administrator with the username "(.*)" and password "(.*)"$/ do |username, password|
-  user = User.spawn do |user|
-    user.administrator = true
-    user.login = Login.spawn(:user => user, :username => username, :password => password, :password_confirmation => password)
-  end
-  user.save!
-  user.login.activate
+Given /^there is an active administrator with the email "(.*)" and password "(.*)"$/ do |email, password|
+  user = User.generate(:email => email, :password => password, :password_confirmation => password, :administrator => true)
+  user.activate
 end
 
 Given /^there is a pending user with the activation code "(.*)"$/ do |activation_code|
-  user = User.spawn do |user|
-    user.login = Login.spawn(:user => user)
-  end
+  user = User.generate
+  user.activation_code = activation_code
   user.save!
-  user.login.activation_code = activation_code
-  user.login.save!
 end

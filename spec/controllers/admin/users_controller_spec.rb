@@ -204,7 +204,7 @@ describe Admin::UsersController do
     end
 
     it "should mark the user login as deleted" do
-      @user.login.should_receive(:mark_deleted)
+      @user.should_receive(:mark_deleted)
       do_delete
     end
 
@@ -215,16 +215,16 @@ describe Admin::UsersController do
 
     describe "scenario where you try to delete yourself" do
       before(:each) do
-        controller.stub!(:current_login).and_return(@user.login)
+        controller.stub!(:current_user).and_return(@user)
       end
 
-      it "should have the same generated object for login that we will try to delete" do
-        controller.send(:current_login).should == @user.login
+      it "should have the same generated object for user that we will try to delete" do
+        controller.send(:current_user).should == @user
         do_delete
       end
 
-      it "should not call user.login.mark_deleted" do
-        @user.login.should_not_receive(:mark_deleted)
+      it "should not call user.mark_deleted" do
+        @user.should_not_receive(:mark_deleted)
         do_delete
       end
 
@@ -257,15 +257,15 @@ describe Admin::UsersController do
     end
 
     it "should activate an account that isn't active" do
-      @user.login.state.should == 'pending'
-      @user.login.should_receive(:activate).and_return(true)
+      @user.state.should == 'pending'
+      @user.should_receive(:activate).and_return(true)
       do_put
     end
 
     it "should not try to reactiavte an active account" do
-      @user.login.activate
-      @user.login.state.should == 'active'
-      @user.login.should_not_receive(:activate)
+      @user.activate
+      @user.state.should == 'active'
+      @user.should_not_receive(:activate)
       do_put
     end
   end
@@ -286,30 +286,30 @@ describe Admin::UsersController do
     end
 
     it "should suspend an account that isn't suspended" do
-      @user.login.state.should == 'pending'
-      @user.login.should_receive(:suspend).and_return(true)
+      @user.state.should == 'pending'
+      @user.should_receive(:suspend).and_return(true)
       do_put
     end
 
     it "should not try to resuspend a suspended account" do
-      @user.login.suspend
-      @user.login.state.should == 'suspended'
-      @user.login.should_not_receive(:suspend)
+      @user.suspend
+      @user.state.should == 'suspended'
+      @user.should_not_receive(:suspend)
       do_put
     end
 
     describe "scenario where you try to suspend yourself" do
       before(:each) do
-        controller.stub!(:current_login).and_return(@user.login)
+        controller.stub!(:current_user).and_return(@user)
       end
 
       it "should have the same generated object for login that we will try to suspend" do
-        controller.send(:current_login).should == @user.login
+        controller.send(:current_user).should == @user
         do_put
       end
 
       it "should not call object.delete" do
-        @user.login.should_not_receive(:suspend)
+        @user.should_not_receive(:suspend)
         do_put
       end
 
@@ -342,7 +342,7 @@ describe Admin::UsersController do
     end
 
     it "should call reset_password! on the login object associated with the user" do
-      @user.login.should_receive(:reset_password!)
+      @user.should_receive(:reset_password!)
       do_put
     end
   end
@@ -370,7 +370,7 @@ describe Admin::UsersController do
 
     describe "when the user is self" do
       before(:each) do
-        controller.stub!(:current_login).and_return(@user.login)
+        controller.stub!(:current_user).and_return(@user)
       end
 
       it "should not allow the administrator setting to be changed" do

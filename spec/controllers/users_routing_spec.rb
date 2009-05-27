@@ -23,6 +23,10 @@ describe UsersController do
     it "should map #show" do
       route_for(:controller => "users", :action => "show").should == "/user"
     end
+
+    it "should map #activate" do
+      route_for(:controller => "users", :action => "activate").should == "/user/activate"
+    end
   end
 
   describe "route recognition" do
@@ -36,6 +40,16 @@ describe UsersController do
 
     it "should generate params for #show" do
       params_from(:get, "/user").should == {:controller => "users", :action => "show"}
+    end
+
+    it "should generate params for #activate" do
+      params_from(:get, "/user/activate").should == {:controller => "users", :action => "activate"}
+    end
+  end
+
+  describe "named routes" do
+    it "should route activate to /user/activate" do
+      activate_path.should == "/user/activate/"
     end
   end
 end

@@ -20,12 +20,12 @@ module Rubaidh
         end
 
         def create
-          @login = Login.authenticate(params[:username], params[:password])
+          @user = User.authenticate(params[:email], params[:password])
 
           respond_to do |format|
-            if @login.present?
-              last_login = @login.last_logged_in_at
-              login_as(@login, params[:remember_me])
+            if @user.present?
+              last_login = @user.last_logged_in_at
+              login_as(@user, params[:remember_me])
               format.html do
                 flash[:notice] = "Successfully logged in"
                 flash[:notice] += ", last login at #{last_login}" if last_login.present?
@@ -33,7 +33,7 @@ module Rubaidh
               end
             else
               format.html do
-                flash[:error] = "Could not log in with that username and password combination"
+                flash[:error] = "Could not log in with that email and password combination"
                 render :action => 'new'
               end
             end
@@ -49,28 +49,28 @@ module Rubaidh
 
         protected
 
-         def login_as(login, remember_me = false)
-           login.update_attribute(:last_logged_in_at, Time.now)
-           self.current_login = login
+         def login_as(user, remember_me = false)
+           user.update_attribute(:last_logged_in_at, Time.now)
+           self.current_user = user
 
            handle_remember_cookie(remember_me)
          end
 
          def handle_remember_cookie(remember_me = false)
-           if current_login.present? && remember_me
-             current_login.remember_me
-             current_login.save
+           if current_user.present? && remember_me
+             current_user.remember_me
+             current_user.save
              set_remember_cookie
            else
-             current_login.forget_me if current_login.present?
+             current_user.forget_me if current_user.present?
              clear_remember_cookie
            end
          end
 
          def set_remember_cookie
            cookies[:auth_token] = {
-             :value => current_login.remember_token,
-             :expires => current_login.remember_token_expires_at
+             :value => current_user.remember_token,
+             :expires => current_user.remember_token_expires_at
            }
          end
 
@@ -79,8 +79,8 @@ module Rubaidh
          end
 
          def logout
-           @current_login.forget_me if @current_login.respond_to?(:forget_me)
-           @current_login = nil
+           @current_user.forget_me if @current_user.respond_to?(:forget_me)
+           @current_user = nil
 
            #clear_remember_cookie
            clear_session_variables

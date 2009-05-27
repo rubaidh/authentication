@@ -30,9 +30,9 @@ describe ActivationsController do
 
   describe "responding to POST create" do
     before(:each) do
-      @login = Login.generate
-      LoginMailer.stub!(:deliver_activation_request)
-      Login.stub!(:find_by_email).and_return(@login)
+      @user = User.generate
+      UserMailer.stub!(:deliver_activation_request)
+      User.stub!(:find_by_email).and_return(@user)
     end
 
     def do_post
@@ -41,29 +41,24 @@ describe ActivationsController do
 
     it "should be successful" do
       do_post
-      response.should be_success
+      response.should redirect_to(login_url)
     end
 
     it "should receive a find by email for Login" do
-      Login.should_receive(:find_by_email)
+      User.should_receive(:find_by_email)
       do_post
     end
 
     describe "with a pending account" do
-      before(:each) do
-        @login.request_activation
-      end
-
       it "should resend the activation" do
-        @login.should_receive(:resend_activation!)
+        @user.should_receive(:resend_activation!)
         do_post
       end
     end
 
     describe "with an account that is active" do
       before(:each) do
-        @login.request_activation
-        @login.activate
+        @user.activate
       end
 
       it "should flash an error" do

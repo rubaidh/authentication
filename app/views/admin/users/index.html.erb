@@ -17,8 +17,8 @@
             <tr>
               <td><%=h user.first_name %></td>
               <td><%=h user.last_name %></td>
-              <td><%=h user.login.username %></td>
-              <td><%= link_to 'Show', [:admin, user], :id => h(user.login.username) %></td>
+              <td><%=h user.email %></td>
+              <td><%= link_to 'Show', [:admin, user], :id => h(user.email) %></td>
             </tr>
           <% end %>
           </tbody>

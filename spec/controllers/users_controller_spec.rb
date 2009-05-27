@@ -24,7 +24,7 @@ describe UsersController do
 
   describe "responding to GET new" do
     before(:each) do
-      @user = User.generate(:login => Login.generate)
+      @user = User.generate
       User.stub!(:new).and_return(@user)
     end
 
@@ -50,7 +50,7 @@ describe UsersController do
 
   describe "responding to POST create" do
     before(:each) do
-      @user = User.generate(:login => Login.generate)
+      @user = User.generate
       User.stub!(:new).and_return(@user)
       @user.stub!(:save)
     end
@@ -93,6 +93,75 @@ describe UsersController do
       it "should re-render the 'new' template" do
         do_post
         response.should render_template(:new)
+      end
+    end
+  end
+
+  describe "responding to GET activate" do
+    before(:each) do
+      @user = User.generate
+      @user.request_activation
+    end
+
+    def do_get
+      get :activate, :activation_code => @user.activation_code
+    end
+
+    def do_get_with_invalid
+      get :activate, :activation_code => "woozle"
+    end
+
+    describe "with a valid activation code" do
+      before(:each) do
+        User.stub!(:find_by_activation_code).and_return(@user)
+      end
+
+      it "should ask the model for the login associated with that activation code" do
+        User.should_receive(:find_by_activation_code).with(@user.activation_code)
+        do_get
+      end
+
+      it "should call #activate on the user" do
+        @user.should_receive(:activate).and_return(true)
+        do_get
+      end
+
+      it "should redirect back to the login page" do
+        do_get
+        response.should be_redirect
+        response.should redirect_to(root_url)
+      end
+
+      it "should set a flash notice message" do
+        do_get
+        flash[:notice].should_not be_blank
+      end
+
+      it "should set current_user to be the @user" do
+        do_get
+        controller.send(:current_user).should == @user
+      end
+    end
+
+    describe "with an invalid activation code" do
+      before(:each) do
+        User.stub!(:find_by_activation_code).and_return(nil)
+      end
+
+      it "should ask the model for the login associated with that activation code" do
+        User.should_receive(:find_by_activation_code).with(@user.activation_code)
+        do_get
+      end
+
+      it "should set a flash error message" do
+        do_get
+        flash[:error].should_not be_blank
+      end
+
+      it "should redirect back to the login page" do
+        do_get
+        response.should be_redirect
+        response.should redirect_to(new_session_path)
       end
     end
   end

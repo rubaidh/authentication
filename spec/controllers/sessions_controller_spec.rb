@@ -30,32 +30,32 @@ describe SessionsController do
 
   describe "responding to POST create" do
     def do_post
-      post :create, :username => 'username', :password => 'password'
+      post :create, :email => 'email', :password => 'password'
     end
 
     def do_post_with_remember_me
-      post :create, :username => 'username', :password => 'password', :remember_me => "1"
+      post :create, :email => 'email', :password => 'password', :remember_me => "1"
     end
 
 
     describe "with a correct password but without remember me" do
       before(:each) do
-        @login = Login.generate
-        Login.stub!(:authenticate).and_return(@login)
+        @user = User.generate
+        User.stub!(:authenticate).and_return(@user)
       end
 
-      it "should authenticate the login" do
-        Login.should_receive(:authenticate).with('username', 'password')
+      it "should authenticate the user" do
+        User.should_receive(:authenticate).with('email', 'password')
         do_post
       end
 
-      it "should set the login id to be a session variable" do
+      it "should set the user id to be a session variable" do
         do_post
-        session[:login_id].should == @login.id
+        session[:user_id].should == @user.id
       end
 
       it "should capture the last_logged in at date" do
-        @login.should_receive(:last_logged_in_at)
+        @user.should_receive(:last_logged_in_at)
         do_post
       end
 
@@ -67,18 +67,18 @@ describe SessionsController do
 
     describe "with a correct password and with remember me" do
       before(:each) do
-        @login = Login.generate
-        Login.stub!(:authenticate).and_return(@login)
+        @user = User.generate
+        User.stub!(:authenticate).and_return(@user)
       end
 
-      it "should authenticate the login" do
-        Login.should_receive(:authenticate).with('username', 'password')
+      it "should authenticate the user" do
+        User.should_receive(:authenticate).with('email', 'password')
         do_post_with_remember_me
       end
 
       it "should set the login id to be a session variable" do
         do_post_with_remember_me
-        session[:login_id].should == @login.id
+        session[:user_id].should == @user.id
       end
 
       it "should render a flash notice" do
@@ -88,18 +88,18 @@ describe SessionsController do
 
       it "should set the @login remember token" do
         do_post_with_remember_me
-        @login.remember_token.should_not be_blank
-        @login.remember_token_expires_at.should_not be_blank
+        @user.remember_token.should_not be_blank
+        @user.remember_token_expires_at.should_not be_blank
       end
     end
 
     describe "with an incorrect password" do
       before(:each) do
-        Login.stub!(:authenticate).and_return(nil)
+        User.stub!(:authenticate).and_return(nil)
       end
 
-      it "should attempt to authenticate the login" do
-        Login.should_receive(:authenticate).with('username', 'password')
+      it "should attempt to authenticate the user" do
+        User.should_receive(:authenticate).with('email', 'password')
         do_post
       end
 

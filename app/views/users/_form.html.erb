@@ -10,24 +10,18 @@
     <%= user_form.text_field :last_name %>
   </p>
 
-  <% user_form.fields_for :login do |login_form| %>
   <p>
-    <%= login_form.label :username %><br />
-    <%= login_form.text_field :username %>
+    <%= user_form.label :email %><br />
+    <%= user_form.text_field :email %>
   </p>
   <p>
-    <%= login_form.label :email %><br />
-    <%= login_form.text_field :email %>
+    <%= user_form.label :password %><br />
+    <%= user_form.password_field :password %>
   </p>
   <p>
-    <%= login_form.label :password %><br />
-    <%= login_form.password_field :password %>
+    <%= user_form.label :password_confirmation %><br />
+    <%= user_form.password_field :password_confirmation %>
   </p>
-  <p>
-    <%= login_form.label :password_confirmation %><br />
-    <%= login_form.password_field :password_confirmation %>
-  </p>
-  <% end %>
 
   <p>
     <%= user_form.submit %>

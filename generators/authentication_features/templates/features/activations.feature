@@ -23,7 +23,7 @@ Feature: Allow a user to activate their account
     Given that I am an anonymous user
     And there is a pending user with the activation code "activation_code_123"
     When I activate a user with activation code "activation_code_123"
-    Then I should see "Login account successfully activated"
+    Then I should see "Account successfully activated, thank you"
 
   Scenario: I have no activation email but I want to try and activate anyway
     Given that I am an anonymous user

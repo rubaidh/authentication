@@ -7,21 +7,13 @@ require 'spec/rails'
 
 
 def test_login_as(role = nil)
-  login = generate_user.login
-  if role.is_a?(Symbol)
-    login = generate_user(role => true).login
-  end
-
-  controller.send :current_login=, login
+  user = (role.is_a?(Symbol) ? generate_user(role => true) : generate_user)
+  controller.send :current_user=, user
 end
 alias :login :test_login_as
 
 def generate_user(stubs = {})
-  user = User.spawn(stubs) do |user|
-    user.login = Login.spawn(:user => user)
-  end
-  user.save!
-  user
+  User.generate(stubs)
 end
 
 Spec::Runner.configure do |config|
