@@ -22,7 +22,7 @@ Given /^there is an active administrator with the email "(.*)" and password "(.*
 end
 
 Given /^there is a pending user with the activation code "(.*)"$/ do |activation_code|
-  user = User.spawn
+  user = User.generate
   user.activation_code = activation_code
   user.save!
 end
