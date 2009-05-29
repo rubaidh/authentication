@@ -87,7 +87,7 @@ module Rubaidh
          end
 
          def clear_session_variables
-           [:login_id].each do |session_variable|
+           [:user_id].each do |session_variable|
              session[session_variable] = nil
            end
          end
