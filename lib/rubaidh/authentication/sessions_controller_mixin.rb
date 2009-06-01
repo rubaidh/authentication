@@ -13,6 +13,7 @@ module Rubaidh
 
       module InstanceMethods
         def new
+          @page_title = "Login"
           store_location
           respond_to do |format|
             format.html # new.html.erb

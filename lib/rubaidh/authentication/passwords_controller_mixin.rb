@@ -10,12 +10,14 @@ module Rubaidh
 
       module InstanceMethods
         def new
+          @page_title = "Forgotten Password"
           respond_to do |format|
             format.html # new.html
           end
         end
 
         def edit
+          @page_title = "Change Password"
           @user = current_user
         end
 

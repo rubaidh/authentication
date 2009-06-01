@@ -16,6 +16,7 @@ module Rubaidh
         end
 
         def new
+          @page_title = "New User"
           @user = User.new
 
           respond_to do |format|
