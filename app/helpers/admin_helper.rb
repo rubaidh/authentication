@@ -17,7 +17,7 @@ module AdminHelper
     end.compact.flatten
 
     # get the unqiue controller names
-    controllers = routes.map { |route| route.gsub(/^\/admin\/([^(\/]+).*$/, "\\1")}.uniq
+    controllers = routes.map { |route| route.gsub(/^\/admin\/([^(\/]+).*$/, "\\1")}.uniq - ['/admin/']
 
     output_string = "<ul>"
     controllers.each do |name|
