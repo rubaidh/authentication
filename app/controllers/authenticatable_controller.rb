@@ -14,5 +14,5 @@
 # in to any controller inherited from this one, which can be overridden with
 # +login_not_required+.
 class AuthenticatableController < ApplicationController
-  include Rubaidh::Authentication::AuthenticatableControllerMixin
+  include Rubaidh::Authentication::Controllers::AuthenticatableControllerMixin
 end

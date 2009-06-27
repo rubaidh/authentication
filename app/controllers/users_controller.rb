@@ -9,5 +9,5 @@
 #++
 
 class UsersController < AuthenticatableController
-  include Rubaidh::Authentication::UsersControllerMixin
+  include Rubaidh::Authentication::Controllers::UsersControllerMixin
 end

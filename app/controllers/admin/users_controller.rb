@@ -9,5 +9,5 @@
 #++
 
 class Admin::UsersController < AdminController
-  include Rubaidh::Authentication::Admin::UsersControllerMixin
+  include Rubaidh::Authentication::Controllers::Admin::UsersControllerMixin
 end

@@ -9,5 +9,5 @@
 #++
 
 class ActivationsController < AuthenticatableController
-  include Rubaidh::Authentication::ActivationsControllerMixin
+  include Rubaidh::Authentication::Controllers::ActivationsControllerMixin
 end
