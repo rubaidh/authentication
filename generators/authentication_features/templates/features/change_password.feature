@@ -20,7 +20,6 @@ Scenario: I am not logged in and shouldn't be able to change a password in this 
     And I fill in "password_confirmation" with "omgwtfpwnt!"
     And I press "update_button"
     Then I should see "Password was successfully updated."
-    And I should see "Log in"
 
   Scenario: Changing my password with invalid input
     Given that I am an authenticated user with the email "foobar@foo.bar" and password "password"
