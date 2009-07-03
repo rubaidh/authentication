@@ -19,9 +19,14 @@ module AdminHelper
     # get the unqiue controller names
     controllers = routes.map { |route| route.gsub(/^\/admin\/([^(\/]+).*$/, "\\1")}.uniq - ['/admin/']
 
+    current_location = request.request_uri.gsub(/^\/admin\/([^(\/]+).*$/, "\\1")
+    if current_location =~ /^\/admin\/?$/
+      current_location = ActionController::Routing::Routes.routes.find { |s| s.segments.to_s == "/admin/" }.requirements[:controller].gsub('admin/', '')
+    end
+
     output_string = "<ul>"
     controllers.each do |name|
-      output_string << content_tag("li#{" class=\"active\"" if controller_name == name.pluralize}", link_to("#{name.humanize}", "/admin/#{name}"))
+      output_string << content_tag("li#{" class=\"active\"" if current_location == name}", link_to("#{name.humanize}", "/admin/#{name}"))
     end
     output_string << "</ul>"
     output_string
