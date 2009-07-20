@@ -1,0 +1,17 @@
+<div class="block">
+  <div class="content">
+    <h2 class="title">Resend Activation</h2>
+    <div class="inner">
+      <% form_tag activation_path do -%>
+        <p>
+          <%= label_tag 'email' %><br />
+          <%= text_field_tag 'email', @email %>
+        </p>
+
+        <p>
+          <%= submit_tag 'Email me', :id => 'email_submit' %>
+        </p>
+      <% end -%>
+    </div>
+  </div>
+</div>
