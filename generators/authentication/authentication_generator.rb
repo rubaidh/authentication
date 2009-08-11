@@ -5,7 +5,7 @@ class AuthenticationGenerator < Rails::Generator::Base
       m.dependency 'authentication_migrations', [], :collision => :skip
       m.dependency 'authentication_models',     [], :collision => :skip
       m.dependency 'authentication_assets',     [], :collision => :skip
-      m.dependency 'authetnication_templates',  [], :collision => :skip
+      m.dependency 'authentication_templates',  [], :collision => :skip
     end
   end
 end
